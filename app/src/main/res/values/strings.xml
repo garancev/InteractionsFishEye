@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fisheye</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <color name="pouet">#EE1010</color>
+
+</resources>
