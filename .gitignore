@@ -14,6 +14,9 @@ local.properties
 
 # Gradle generated files
 .gradle/
+gradle/
+*.gradle
+gradle*
 
 # Signing files
 .signing/
