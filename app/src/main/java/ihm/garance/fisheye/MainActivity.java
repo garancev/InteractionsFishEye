@@ -2,6 +2,7 @@ package ihm.garance.fisheye;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.SeekBar;
 
@@ -21,7 +22,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         myFisheye = (FishEyeView)findViewById(R.id.fisheyeView);
         setSeekBars();
+        myFisheye.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                    myFisheye.deformPoints(o, r, z, event.getX(), event.getY());
+                    return true;
+            }
+        });
     }
+
+
+
+    public void tryFishEye(View view) {
+        System.out.println("woo tas clique");
+        myFisheye.deformPoints(o, r, z);
+    }
+
+
+    public void resetFish(View view) {
+        System.out.println("t'es pas drôle :( ");
+        myFisheye.resetPoints();
+    }
+
     private void setSeekBars() {
         seekBarO = (SeekBar) findViewById(R.id.seekBarO);
         seekBarO.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -61,25 +84,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStopTrackingTouch(SeekBar seekBar) {            }
         }));
     }
-
-    public void tryFishEye(View view) {
-        System.out.println("woo tas clique");
-        myFisheye.deformPoints(o, r, z);
-    }
-
-    public void resetFish(View view) {
-        System.out.println("t'es pas drôle :( ");
-        myFisheye.resetPoints();
-    }
-
 }

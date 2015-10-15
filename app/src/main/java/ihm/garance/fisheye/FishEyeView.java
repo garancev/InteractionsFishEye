@@ -26,9 +26,6 @@ public class FishEyeView extends View {
     private float[] origSize;
     private float iCentre;
     private float jCentre;
-    private float[] ptsOrigin;
-    private float[] ptsDeform;
-
 
     public FishEyeView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -70,7 +67,7 @@ public class FishEyeView extends View {
                 canvas.drawLine(pts[i], pts[i + 1], pts[i + 2], pts[i + 3], paint);
             }
 // ligne entre le dernier sommet et le premier sommet
-            canvas.drawLine(pts[pts.length-2], pts[pts.length-1], pts[0], pts[1], paint);
+            canvas.drawLine(pts[pts.length - 2], pts[pts.length - 1], pts[0], pts[1], paint);
         }
     }
 
@@ -78,14 +75,20 @@ public class FishEyeView extends View {
         elts.clear();
         double scale = 1;
         for(MyPolygon p : eltsOrigin) {
+
             MyPolygon newPoly = new MyPolygon();
             for (int k = 0; k < p.getNbPoints(); k++) {
                 double dist = dist(p.xPoint(k), p.yPoint(k));
-
-                //si fdeform < à solution calculée avant, je fais, sinon on annule tooout !
-                scale = fDeform(dist, o, r, z) / dist;
-                newPoly.addPoint((float) (iCentre + (p.xPoint(k) - iCentre) * scale), (float) (jCentre + (p.yPoint(k) - jCentre) * scale));
-                newPoly.color = Color.BLACK;
+                if (dist < 90) {
+                    //si fdeform < à solution calculée avant, je fais, sinon on annule tooout !
+                    scale = fDeform(dist, o, r, z) / dist;
+                    newPoly.addPoint((float) (iCentre + (p.xPoint(k) - iCentre) * scale), (float) (jCentre + (p.yPoint(k) - jCentre) * scale));
+                    newPoly.color = Color.BLACK;
+                }
+                else {
+                    newPoly.addPoint(p.xPoint(k), p.yPoint(k));
+                    newPoly.color = Color.BLACK;
+                }
             }
             elts.add(newPoly);
         }
@@ -110,5 +113,12 @@ public class FishEyeView extends View {
 
     private double dist(float i, float j) {
         return sqrt(pow(iCentre - i, 2) + pow(jCentre - j, 2));
+    }
+
+    public void deformPoints(double o, double r, double z, float xCenter, float yCenter) {
+        //ici, besoin de faire en + le choix du centre
+        iCentre = xCenter;
+        jCentre = yCenter;
+        deformPoints(o, r, z);
     }
 }

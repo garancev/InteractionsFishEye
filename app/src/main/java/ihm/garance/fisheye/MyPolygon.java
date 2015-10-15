@@ -12,7 +12,6 @@ public class MyPolygon {
 	public int color;
 	float[] res ;
     int length = 0;
-	float[] resOrigin;
 
 	public void addPoint(float dx, float dy) {
 		// TODO Auto-generated method stub
@@ -21,7 +20,6 @@ public class MyPolygon {
 
         length += 1;
 
-        // float [] newres = new float[points.size()];
         float [] newres = new float[length*2];
 		if (res != null)
 			{
